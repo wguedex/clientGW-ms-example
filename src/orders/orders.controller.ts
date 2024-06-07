@@ -9,7 +9,7 @@ import {
   Query,
   Patch,
 } from '@nestjs/common'; 
-import { ClientProxy, RpcException } from '@nestjs/microservices';
+import { ClientProxy, Payload, RpcException } from '@nestjs/microservices';
 import { PaginationDto } from 'src/common';
 import { firstValueFrom } from 'rxjs';
 import { CreateOrderDto, OrderPaginationDTO, StatusDTO } from './dto';
@@ -22,7 +22,7 @@ export class OrdersController {
   ) {}
 
   @Post()
-  create(@Body() createOrderDto: CreateOrderDto) {
+  create(@Payload() createOrderDto: CreateOrderDto) {
     return this.client.send('createOrder', createOrderDto);
   }
 
