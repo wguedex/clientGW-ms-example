@@ -1,6 +1,7 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Inject } from '@nestjs/common';
+import { Controller, Get, Post, Inject, Query, Body } from '@nestjs/common';
 import { ClientProxy, Payload } from '@nestjs/microservices';
 import { NATS_SERVICE } from 'src/config/services';
+import { LoginUserDto, RegisterUserDto } from './dto';
  
 
 @Controller('auth')
@@ -10,18 +11,20 @@ export class AuthController {
   ) {}
 
   @Post('register')
-  registerUser(@Payload() registerUserDto: any){ 
-    return this.client.send('auth.register.user', registerUserDto);
+  registerUser(@Body() registerUserDto: RegisterUserDto){ 
+    console.log(registerUserDto)
+    // return this.client.send('auth.register.user', registerUserDto);
   }
 
   @Post('login')
-  loginUser(@Payload() loginUserDto: any){ 
-    return this.client.send('auth.login.user', loginUserDto);
+  loginUser(@Body() loginUserDto: LoginUserDto){ 
+    console.log(loginUserDto)
+    // return this.client.send('auth.login.user', loginUserDto);
   }
  
-  @Post('check-token-user')
-  verifyTokenUser(@Payload() tokenUserDto: any){ 
-    return this.client.send('auth.verify.user', tokenUserDto);
+  @Get('verify')
+  verifyUser(@Query('token') token: string){ 
+    // return this.client.send('auth.verify.user', tokenUserDto);
   }
  
 }
