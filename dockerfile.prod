@@ -29,6 +29,8 @@ COPY . .
 # Construye la aplicación
 RUN npm run build
 
+RUN npm ci -f --only=production && npm cache clean --force
+
 # Crear la imagen final de docker 
 FROM node:21-alpine3.19 as prod
 
